@@ -69,6 +69,13 @@ The combined file will contain all files from the Base view, with:
 
 ## Development
 
+```bash
+pnpm run dev
+```
+
+Edit the source files in the `src/` directory. The main plugin code is in `src/main.ts`. Needs the hotreload plugin for live reloading during development.
+
+
 ### Building
 
 ```bash
