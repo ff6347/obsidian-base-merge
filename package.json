@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-combine-base",
-	"version": "0.0.1",
+	"version": "1.0.0-beta.2",
 	"main": "main.js",
 	"type": "module",
 	"packageManager": "pnpm@10.15.1",

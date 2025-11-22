@@ -23,6 +23,7 @@ module.exports = {
 				assets: [
 					"package.json",
 					"package-lock.json",
+					"pnpm-lock.yaml",
 					"CHANGELOG.md",
 					"manifest.json",
 					"versions.json",
