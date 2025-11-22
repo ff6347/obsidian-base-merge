@@ -1,0 +1,23 @@
+[tools]
+node = "24"
+pnpm = "10.23.0"
+
+[tasks.build]
+run = "pnpm run build"
+description = "Build the project"
+
+[tasks.dev]
+run = "pnpm run dev"
+description = "Run the development server"
+[tasks.lint]
+run = "pnpm run lint"
+description = "Lint the codebase"
+[tasks.test]
+run = "pnpm run test"
+description = "Run the tests"
+[tasks.prettier]
+run = "pnpm run format"
+description = "Format the codebase with Prettier"
+[tasks.typecheck]
+run = "pnpm run typecheck"
+description = "Run TypeScript type checking"

@@ -1,0 +1,9 @@
+{
+	"id": "base-combine",
+	"name": "Base Combine",
+	"version": "0.0.1",
+	"minAppVersion": "1.7.0",
+	"description": "Combine all files from a Base view into a single file, sorted newest to oldest",
+	"author": "ff6347",
+	"isDesktopOnly": false
+}

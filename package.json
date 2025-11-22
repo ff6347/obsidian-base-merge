@@ -1,0 +1,58 @@
+{
+	"name": "obsidian-combine-base",
+	"version": "0.0.1",
+	"main": "main.js",
+	"type": "module",
+	"packageManager": "pnpm@10.15.1",
+	"private": true,
+	"scripts": {
+		"dev": "node build.js --watch",
+		"build": "node build.js --production",
+		"format": "prettier --write .",
+		"lint": "oxlint --tsconfig tsconfig.json",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:watch": "vitest --watch",
+		"typecheck": "tsc --noEmit",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@semantic-release/exec": "7.1.0",
+		"@technologiestiftung/semantic-release-config": "1.2.4",
+		"@types/node": "24.8.1",
+		"@vitest/ui": "3.2.4",
+		"builtin-modules": "5.0.0",
+		"husky": "9.1.7",
+		"jsdom": "27.0.1",
+		"lint-staged": "16.2.5",
+		"obsidian": "1.10.0",
+		"oxlint": "1.23.0",
+		"prettier": "3.6.2",
+		"rolldown": "1.0.0-beta.9-commit.d91dfb5",
+		"semantic-release": "25.0.1",
+		"typescript": "5.9.3",
+		"vitest": "3.2.4"
+	},
+	"dependencies": {},
+	"prettier": {
+		"tabWidth": 2,
+		"semi": true,
+		"singleQuote": false,
+		"useTabs": true,
+		"printWidth": 80,
+		"overrides": [
+			{
+				"files": [
+					"*.yml",
+					"*.yaml"
+				],
+				"options": {
+					"useTabs": false
+				}
+			}
+		]
+	},
+	"lint-staged": {
+		"*": "prettier --write --ignore-unknown"
+	}
+}
