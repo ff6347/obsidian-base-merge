@@ -1,13 +1,13 @@
 # Base Combine
 
-Combine all files from an Obsidian Base view into a single markdown file, sorted newest to oldest.
+Combine all files listed in an Obsidian Base view into a single markdown file, sorted newest to oldest. 
 
 ## Features
 
-- **One-click export**: Combine all files from your current Base view into a single markdown file
-- **Smart filtering**: Automatically excludes `.canvas` and `.base` files
-- **Sorted output**: Files are sorted by modification time (newest first)
-- **Clean formatting**: Each file is separated with headers and dividers
+- Combine all files from your current Base view into a single markdown file (duh)
+- Automatically excludes `.canvas` and `.base` files
+- Files are sorted by modification time (latest change first)
+- Each file is separated with headers and dividers
 
 ## Installation
 
@@ -73,7 +73,7 @@ The combined file will contain all files from the Base view, with:
 pnpm run dev
 ```
 
-Edit the source files in the `src/` directory. The main plugin code is in `src/main.ts`. Needs the hotreload plugin for live reloading during development.
+Edit the source files in the `src/` directory. The main plugin code is in `src/main.ts`. Uses the hotreload plugin for live reloading during development.
 
 
 ### Building
