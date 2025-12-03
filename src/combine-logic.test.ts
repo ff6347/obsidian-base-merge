@@ -81,7 +81,9 @@ describe("combineFileContents", () => {
 
 		const result = combineFileContents(files);
 
-		expect(result).toBe("# note\n\nHello world\n\n---\n\n");
+		expect(result).toBe(
+			"<!-- <document> -->\n# note\n\nHello world\n<!-- </document> -->\n\n",
+		);
 	});
 
 	it("should combine multiple files correctly", () => {
@@ -93,7 +95,8 @@ describe("combineFileContents", () => {
 		const result = combineFileContents(files);
 
 		expect(result).toBe(
-			"# first\n\nFirst content\n\n---\n\n# second\n\nSecond content\n\n---\n\n",
+			"<!-- <document> -->\n# first\n\nFirst content\n<!-- </document> -->\n\n" +
+				"<!-- <document> -->\n# second\n\nSecond content\n<!-- </document> -->\n\n",
 		);
 	});
 
@@ -102,7 +105,9 @@ describe("combineFileContents", () => {
 
 		const result = combineFileContents(files);
 
-		expect(result).toBe("# empty\n\n\n\n---\n\n");
+		expect(result).toBe(
+			"<!-- <document> -->\n# empty\n\n\n<!-- </document> -->\n\n",
+		);
 	});
 
 	it("should handle empty array", () => {
@@ -120,7 +125,9 @@ describe("combineFileContents", () => {
 
 		const result = combineFileContents(files);
 
-		expect(result).toBe("# multiline\n\nLine 1\nLine 2\nLine 3\n\n---\n\n");
+		expect(result).toBe(
+			"<!-- <document> -->\n# multiline\n\nLine 1\nLine 2\nLine 3\n<!-- </document> -->\n\n",
+		);
 	});
 
 	it("should handle special characters in basename", () => {
@@ -130,7 +137,9 @@ describe("combineFileContents", () => {
 
 		const result = combineFileContents(files);
 
-		expect(result).toBe("# file-name_123\n\nContent\n\n---\n\n");
+		expect(result).toBe(
+			"<!-- <document> -->\n# file-name_123\n\nContent\n<!-- </document> -->\n\n",
+		);
 	});
 });
 

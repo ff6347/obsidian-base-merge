@@ -10,11 +10,14 @@ export function shouldIncludeFile(filePath: string): boolean {
 	return !filePath.endsWith(".canvas") && !filePath.endsWith(".base");
 }
 
+const DOCUMENT_START = "<!-- <document> -->";
+const DOCUMENT_END = "<!-- </document> -->";
+
 export function combineFileContents(files: FileContent[]): string {
 	let combined = "";
 
 	for (const file of files) {
-		combined += `# ${file.basename}\n\n${file.content}\n\n---\n\n`;
+		combined += `${DOCUMENT_START}\n# ${file.basename}\n\n${file.content}\n${DOCUMENT_END}\n\n`;
 	}
 
 	return combined;
