@@ -1,3 +1,10 @@
+# [1.1.0-beta.1](https://github.com/ff6347/obsidian-base-merge/compare/v1.0.0...v1.1.0-beta.1) (2025-12-03)
+
+
+### Features
+
+* use HTML comment markers for document boundaries ([5b6683b](https://github.com/ff6347/obsidian-base-merge/commit/5b6683b8276c57d039fdd16d3d6529203bef8139))
+
 # 1.0.0 (2025-11-22)
 
 
