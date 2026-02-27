@@ -71,16 +71,13 @@ export default class BaseCombinePlugin extends Plugin {
 
 		const files: TFile[] = [];
 		for (const key of results.keys()) {
-			if (typeof key !== "string") {
+			if (!(key instanceof TFile)) {
 				continue;
 			}
-			if (!shouldIncludeFile(key)) {
+			if (!shouldIncludeFile(key.path)) {
 				continue;
 			}
-			const file = this.app.vault.getAbstractFileByPath(key);
-			if (file instanceof TFile) {
-				files.push(file);
-			}
+			files.push(key);
 		}
 
 		if (files.length === 0) {
