@@ -6,3 +6,4 @@ dist/
 main.js
 .DS_Store
 data.json
+test/

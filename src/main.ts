@@ -1,9 +1,9 @@
-import { Plugin, TFile, Notice, ItemView } from "obsidian";
+import { Plugin, TFile, Notice } from "obsidian";
 import {
 	combineFileContents,
 	generateTimestamp,
 	generateOutputFileName,
-	extractFilteredHrefs,
+	shouldIncludeFile,
 	type FileContent,
 } from "./combine-logic.js";
 
@@ -47,51 +47,44 @@ export default class BaseCombinePlugin extends Plugin {
 	}
 
 	getBaseFiles(): TFile[] | null {
-		const activeView = this.app.workspace.getActiveViewOfType(ItemView as any);
+		// @ts-ignore - activeLeaf is not in the public API
+		const activeView = this.app.workspace.activeLeaf?.view;
 
 		if (!activeView) {
 			new Notice("No active view found");
 			return null;
 		}
 
-		// @ts-ignore
 		if (activeView.getViewType() !== "bases") {
 			new Notice("Current view is not a Base. Please open a Base view first.");
 			return null;
 		}
 
-		try {
-			// Get files from Base view by querying internal links
-			// @ts-ignore
-			const linkElements =
-				activeView.containerEl.querySelectorAll("a.internal-link");
+		const results: Map<unknown, unknown> | undefined =
+			// @ts-ignore - controller.results is not in the public API
+			activeView.controller?.results;
 
-			// Extract and filter hrefs using pure function
-			const links = Array.from(linkElements).map((element) => {
-				const link = element as HTMLAnchorElement;
-				return { href: link.getAttribute("href") };
-			});
-			const filteredHrefs = extractFilteredHrefs(links);
-
-			// Convert hrefs to TFile objects
-			const files: TFile[] = [];
-			for (const href of filteredHrefs) {
-				const file = this.app.vault.getAbstractFileByPath(href);
-				if (file instanceof TFile) {
-					files.push(file);
-				}
-			}
-
-			if (files.length > 0) {
-				return files;
-			}
-
+		if (!results || results.size === 0) {
 			new Notice("No files found in current Base view");
 			return null;
-		} catch (error) {
-			console.error("Error getting Base files:", error);
-			new Notice("Error accessing Base data");
+		}
+
+		const files: TFile[] = [];
+		for (const key of results.keys()) {
+			if (!(key instanceof TFile)) {
+				continue;
+			}
+			if (!shouldIncludeFile(key.path)) {
+				continue;
+			}
+			files.push(key);
+		}
+
+		if (files.length === 0) {
+			new Notice("No files found in current Base view");
 			return null;
 		}
+
+		return files;
 	}
 }
