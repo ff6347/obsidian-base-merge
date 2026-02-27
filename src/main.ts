@@ -1,4 +1,4 @@
-import { Plugin, TFile, Notice, ItemView } from "obsidian";
+import { Plugin, TFile, Notice } from "obsidian";
 import {
 	combineFileContents,
 	generateTimestamp,
@@ -47,14 +47,14 @@ export default class BaseCombinePlugin extends Plugin {
 	}
 
 	getBaseFiles(): TFile[] | null {
-		const activeView = this.app.workspace.getActiveViewOfType(ItemView as any);
+		// @ts-ignore - activeLeaf is not in the public API
+		const activeView = this.app.workspace.activeLeaf?.view;
 
 		if (!activeView) {
 			new Notice("No active view found");
 			return null;
 		}
 
-		// @ts-ignore
 		if (activeView.getViewType() !== "bases") {
 			new Notice("Current view is not a Base. Please open a Base view first.");
 			return null;
