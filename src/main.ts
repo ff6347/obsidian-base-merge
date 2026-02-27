@@ -3,7 +3,7 @@ import {
 	combineFileContents,
 	generateTimestamp,
 	generateOutputFileName,
-	extractFilteredHrefs,
+	shouldIncludeFile,
 	type FileContent,
 } from "./combine-logic.js";
 
@@ -60,37 +60,31 @@ export default class BaseCombinePlugin extends Plugin {
 			return null;
 		}
 
-		try {
-			// Get files from Base view by querying internal links
-			const linkElements =
-				activeView.containerEl.querySelectorAll("span.internal-link");
+		const results: Map<string, unknown> | undefined =
+			// @ts-ignore - controller.results is not in the public API
+			activeView.controller?.results;
 
-			// Extract and filter hrefs using pure function
-			const links = Array.from(linkElements).map((element) => {
-				const link = element as HTMLSpanElement;
-				return { href: link.getAttribute("data-href") };
-			});
-			const filteredHrefs = extractFilteredHrefs(links);
-
-			// Convert hrefs to TFile objects
-			const files: TFile[] = [];
-			for (const href of filteredHrefs) {
-				const file = this.app.vault.getAbstractFileByPath(href);
-				if (file instanceof TFile) {
-					files.push(file);
-				}
-			}
-
-			if (files.length > 0) {
-				return files;
-			}
-
+		if (!results || results.size === 0) {
 			new Notice("No files found in current Base view");
 			return null;
-		} catch (error) {
-			console.error("Error getting Base files:", error);
-			new Notice("Error accessing Base data");
+		}
+
+		const files: TFile[] = [];
+		for (const path of results.keys()) {
+			if (!shouldIncludeFile(path)) {
+				continue;
+			}
+			const file = this.app.vault.getAbstractFileByPath(path);
+			if (file instanceof TFile) {
+				files.push(file);
+			}
+		}
+
+		if (files.length === 0) {
+			new Notice("No files found in current Base view");
 			return null;
 		}
+
+		return files;
 	}
 }
