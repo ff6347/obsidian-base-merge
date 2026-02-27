@@ -62,14 +62,13 @@ export default class BaseCombinePlugin extends Plugin {
 
 		try {
 			// Get files from Base view by querying internal links
-			// @ts-ignore
 			const linkElements =
-				activeView.containerEl.querySelectorAll("a.internal-link");
+				activeView.containerEl.querySelectorAll("span.internal-link");
 
 			// Extract and filter hrefs using pure function
 			const links = Array.from(linkElements).map((element) => {
-				const link = element as HTMLAnchorElement;
-				return { href: link.getAttribute("href") };
+				const link = element as HTMLSpanElement;
+				return { href: link.getAttribute("data-href") };
 			});
 			const filteredHrefs = extractFilteredHrefs(links);
 
