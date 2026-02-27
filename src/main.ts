@@ -60,7 +60,7 @@ export default class BaseCombinePlugin extends Plugin {
 			return null;
 		}
 
-		const results: Map<string, unknown> | undefined =
+		const results: Map<unknown, unknown> | undefined =
 			// @ts-ignore - controller.results is not in the public API
 			activeView.controller?.results;
 
@@ -70,11 +70,14 @@ export default class BaseCombinePlugin extends Plugin {
 		}
 
 		const files: TFile[] = [];
-		for (const path of results.keys()) {
-			if (!shouldIncludeFile(path)) {
+		for (const key of results.keys()) {
+			if (typeof key !== "string") {
 				continue;
 			}
-			const file = this.app.vault.getAbstractFileByPath(path);
+			if (!shouldIncludeFile(key)) {
+				continue;
+			}
+			const file = this.app.vault.getAbstractFileByPath(key);
 			if (file instanceof TFile) {
 				files.push(file);
 			}
