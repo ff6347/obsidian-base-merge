@@ -26,10 +26,6 @@ jobs:
     name: semantic-release
     needs: [build]
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,4 +37,4 @@ jobs:
           pnpm run build
           pnpm exec semantic-release --ci
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
