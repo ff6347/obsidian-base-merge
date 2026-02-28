@@ -26,17 +26,19 @@ jobs:
     name: semantic-release
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - uses: jdx/mise-action@v2
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
       - run: |
           pnpm install
           node version-bump.js
           pnpm run build
           pnpm exec semantic-release --ci
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
